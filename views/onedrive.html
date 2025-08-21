@@ -1,0 +1,47 @@
+{{define "title"}}OneDrive{{end}}
+{{define "content"}}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="display-4 fw-bold">Files</h1>
+            <table class="table table-striped table-hover mt-4">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Size</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{ $i := .Data.id }}
+                    {{range $file := .Data.files}}
+                    <tr>
+                        <td><span class="text-muted">{{ $file.ID }}</span></td>
+                        <td>{{ $file.Name }}</td>
+                        <td>{{ $file.Size }}</td>
+                        <td>
+                            {{if $file.Folder}}
+                                <span class="text-success"><strong>Folder</strong></span>
+                            {{else}}
+                                <span class="text-info"><strong>File</strong></span>
+                            {{end}}
+                        </td>
+                        <td>
+                            {{if $file.Folder}}
+                                <a href="/onedrive/folder/{{ $i }}/{{ $file.ID }}" class="btn btn-primary btn-sm">View</a>
+                            {{else}}
+                                <a href="{{ $file.DownloadURL }}" class="btn btn-primary btn-sm">Download</a>
+                            {{end}}
+                        </td>
+                    </tr>
+                    {{end}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="mb-2"></div>
+{{end}}

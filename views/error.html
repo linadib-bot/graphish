@@ -1,0 +1,10 @@
+{{define "title"}}Errors{{end}}
+{{define "content"}}
+<section class="section">
+  <div class="container">
+    Internal Server Error
+    <pre>{{.Data.error}}</pre>                                                                                                                │tp://localhost:8888
+    <pre>{{.Data.stacktrace}}</pre>
+  </div>
+</section>
+{{end}}

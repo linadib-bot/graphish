@@ -1,0 +1,74 @@
+{{- define "app" -}}
+<!Doctype html>
+<html lang="en" class="h-100">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{block "title" .}}{{end}}</title>
+    <link rel="icon" type="image/x-icon" href='{{static "/favicon.ico"}}'>
+    <link href='{{static "/bootstrap.min.css"}}' rel="stylesheet">
+    {{block "head" .}}{{end}}
+  </head>
+  <body class="d-flex flex-column h-100"> 
+<nav class="navbar navbar-expand-lg bg-dark">
+  <div class="container-xl">
+  <a class="navbar-brand" href="/dashboard">
+    <span style="color: white;">
+      Graphish
+    </span>
+  </a>
+{{if not isGuest }}
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon"></span>
+</button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+      </li>
+    </ul>
+    <div class="d-flex align-items-lg-center mt-3 mt-lg-0">
+      <a href="/logout" class="btn btn-outline-light me-2">
+        Logout
+      </a>
+    </div>
+</div>
+{{else}}
+<div class="d-flex align-items-lg-center mt-3 mt-lg-0">
+  <a href="/" class="btn btn-outline-light me-2">
+    Login
+  </a>
+</div>
+{{end}}
+</div>
+</div>
+</nav>
+
+<main class="flex-shrink-0">
+<div class="mb-3"></div>
+<div class="container">
+    {{range $e := .Flashes}}
+        <div class="alert alert-{{$e.Kind}}" role="alert">
+          {{$e.Message}}
+        </div>
+    {{end}}
+</div>
+<div class="container-fluid">
+  {{block "content" .}}{{end}}
+</div>
+</div>
+</div>
+</main>
+<footer class="footer mt-auto py-3 bg-dark text-white">
+  <div class="container-fluid">
+    <ul class="nav justify-content-center border-bottom border-white border-opacity-25 pb-3 mb-3">
+      <li class="nav-item"><a href='{{static "/PGP.txt"}}' class="nav-link px-2 link-light"><strong>PGP</strong></a></li>
+      <li class="nav-item"><a href='{{static "/Donation.txt"}}' class="nav-link px-2 link-light"><strong>Donate</strong></a></li>
+    </ul>
+    <p class="text-center text-white text-opacity-75 mb-0">© 2025 Graphish Made for Exploit.IN by <a href="https://forum.exploit.in/profile/195141-sha256sum/">sha256sum</a></p>
+  </div>
+</footer> 
+  </body>
+</html>
+{{- end -}}
+
+
